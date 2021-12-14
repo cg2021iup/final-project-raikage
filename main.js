@@ -9,6 +9,8 @@ let scene, camera, renderer, pointLight, ambientLight;
 let controls;
 
 var MoveSpeed = 1500;
+var sunMesh, mercuryMesh, venusMesh, marsMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
+
 const radius = 6371;
 
 const clock = new THREE.Clock();
@@ -26,7 +28,7 @@ function init(){
 
     scene = new THREE.Scene();
 
-    //Light
+    // Light
     pointLight = new THREE.PointLight(0xffffff);    
     ambientLight = new THREE.AmbientLight({
         color: 0xffffff,
@@ -35,9 +37,8 @@ function init(){
     scene.add(ambientLight, pointLight);
     pointLight.position.set (0, 0, 0);
     
-    //Planets
+    // Planets
     var loader = new GLTFLoader();
-    var sunMesh, mercuryMesh, venusMesh, marsMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
 
     loader.load('./gltf/0.0_Sun.glb', sun_forge, xhr, error);
     loader.load('./gltf/1.0_Mercury.glb', mercury_forge, xhr, error);
@@ -134,7 +135,7 @@ function init(){
     function xhr ( xhr ) { console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' ); }
 	function error ( error ) { console.log( 'An error happened' ); }
 
-    //Planet Line
+    // Planet Line
     const lineMaterial = new THREE.MeshBasicMaterial( { color: 0x0BB5FF } );
 
     const mercuryLineGeo = new THREE.TorusGeometry( 300, 0.2, 16, 100 );
@@ -171,7 +172,7 @@ function init(){
     uranusLine.rotation.x = Math.PI/2;
     neptuneLine.rotation.x = Math.PI/2;
 
-    //Stars
+    // Background Stars
     const r = radius, starsGeometry = [ new THREE.BufferGeometry(), new THREE.BufferGeometry() ];
 
     const vertices1 = [];
@@ -245,8 +246,22 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
 }
 
+// Planet rotation time
+function planetRotation(){
+    sunMesh.rotation.y += 9.6e-5; // 25 * earth days
+    mercuryMesh.rotation.y += 4.12e-5; // 58.6 * earth days
+    venusMesh.rotation.y += 9.9e-6; // 243 * earth days
+    earthMesh.rotation.y += 24e-4;
+    marsMesh.rotation.y += 25e-4; // earth days + 1
+    jupiterMesh.rotation.y += 1e-3; // 10/earth days
+    saturnMesh.rotation.y += 1.15e-3; // 10.5/earth days
+    uranusMesh.rotation.y += 1.725e-3; // 17.25/earth days
+    neptuneMesh.rotation.y += 1.6e-3; // 16/earth days
+}
+
 function animate(){
     requestAnimationFrame(animate);
+    planetRotation();
     render();
     stats.update();
 }
