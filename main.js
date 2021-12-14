@@ -1,36 +1,42 @@
 import * as THREE from './build/three.module.js';
+import Stats from './js/stats.module.js';
 import { OrbitControls } from './js/OrbitControls.js';
+import { FlyControls } from './js/FlyControls.js';
 import { GLTFLoader } from './js/GLTFLoader.js';
 
+let container, stats;
 let scene, camera, renderer, pointLight, ambientLight;
 let controls;
 
+var MoveSpeed = 1500;
 const radius = 6371;
 
-function init(){
-    scene = new THREE.Scene();
+const clock = new THREE.Clock();
 
-    renderer = new THREE.WebGLRenderer({antialias:true});
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+init();
+animate();
+
+function init(){
+    container = document.createElement( 'div' );
+    document.body.appendChild( container );
 
     camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 1e7);
     camera.position.set(0, 0, 750);
 
-    controls = new OrbitControls(camera, renderer.domElement);
-    
-    //Light Cube
+    scene = new THREE.Scene();
+
+    //Light
     pointLight = new THREE.PointLight(0xffffff);    
     ambientLight = new THREE.AmbientLight({
         color: 0xffffff,
         intensity: 0.1
     });
-    scene.add(pointLight, ambientLight);
-    pointLight.position.set (0, 0, 0)
-
+    scene.add(ambientLight, pointLight);
+    pointLight.position.set (0, 0, 0);
+    
     //Planets
     var loader = new GLTFLoader();
-    var sunMesh, mercuryMesh;
+    var sunMesh, mercuryMesh, venusMesh, marsMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
 
     loader.load('./gltf/0.0_Sun.glb', sun_forge, xhr, error);
     loader.load('./gltf/1.0_Mercury.glb', mercury_forge, xhr, error);
@@ -104,12 +110,41 @@ function init(){
         scene.add( stars );
     }
 
-    animate();
+
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    container.appendChild( renderer.domElement );
+
+    // controls = new OrbitControls(camera, renderer.domElement);
+    controls = new FlyControls( camera, renderer.domElement );
+    controls.movementSpeed = MoveSpeed;
+    controls.domElement = container;
+    controls.rollSpeed = Math.PI / 6;
+    controls.autoForward = false;
+    controls.dragToLook = false;
+
+    stats = new Stats();
+    container.appendChild( stats.dom );
+
+    window.addEventListener( 'resize', onWindowResize );
+}
+
+function onWindowResize() {
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 }
 
 function animate(){
-    renderer.render(scene, camera);
-    controls.update();
     requestAnimationFrame(animate);
+    render();
+    stats.update();
 }
-init();
+
+function render(){
+    const delta = clock.getDelta();
+    controls.update( delta );
+    renderer.render( scene, camera );
+}
