@@ -21,7 +21,8 @@ function init(){
     document.body.appendChild( container );
 
     camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 1e7);
-    camera.position.set(0, 0, 750);
+    camera.position.set(-1000, 800, 1050);
+    camera.lookAt( 0, 0, 0 )
 
     scene = new THREE.Scene();
 
@@ -61,7 +62,7 @@ function init(){
         console.log( gltf );
         mercuryMesh = gltf.scene;
         mercuryMesh.scale.set( 0.003, 0.003, 0.003 );
-        mercuryMesh.position.set( 240, 0, 0 );
+        mercuryMesh.position.set( 300, 0, 0 );
         mercuryMesh.castShadow = true;
         mercuryMesh.receiveShadow = true;
         scene.add( mercuryMesh );
@@ -70,7 +71,7 @@ function init(){
         console.log( gltf );
         venusMesh = gltf.scene;
         venusMesh.scale.set( 0.007, 0.007, 0.007 );
-        venusMesh.position.set( 440, 0, 0 );
+        venusMesh.position.set( 450, 0, 0 );
         venusMesh.castShadow = true;
         venusMesh.receiveShadow = true;
         scene.add( venusMesh );
@@ -79,7 +80,7 @@ function init(){
         console.log( gltf );
         earthMesh = gltf.scene;
         earthMesh.scale.set( 0.008, 0.008, 0.008 );
-        earthMesh.position.set( 640, 0, 0 );
+        earthMesh.position.set( 600, 0, 0 );
         earthMesh.castShadow = true;
         earthMesh.receiveShadow = true;
         scene.add( earthMesh );
@@ -88,7 +89,7 @@ function init(){
         console.log( gltf );
         marsMesh = gltf.scene;
         marsMesh.scale.set( 0.004, 0.004, 0.004 );
-        marsMesh.position.set( 840, 0, 0 );
+        marsMesh.position.set( 795, 0, 0 );
         marsMesh.castShadow = true;
         marsMesh.receiveShadow = true;
         scene.add( marsMesh );
@@ -97,7 +98,7 @@ function init(){
         console.log( gltf );
         jupiterMesh = gltf.scene;
         jupiterMesh.scale.set( 0.09, 0.09, 0.09 );
-        jupiterMesh.position.set( 1040, 0, 0 );
+        jupiterMesh.position.set( 1455, 0, 0 );
         jupiterMesh.castShadow = true;
         jupiterMesh.receiveShadow = true;
         scene.add( jupiterMesh );
@@ -106,7 +107,7 @@ function init(){
         console.log( gltf );
         saturnMesh = gltf.scene;
         saturnMesh.scale.set( 0.075, 0.075, 0.075 );
-        saturnMesh.position.set( 1240, 0, 0 );
+        saturnMesh.position.set( 2175, 0, 0 );
         saturnMesh.castShadow = true;
         saturnMesh.receiveShadow = true;
         scene.add( saturnMesh );
@@ -115,7 +116,7 @@ function init(){
         console.log( gltf );
         uranusMesh = gltf.scene;
         uranusMesh.scale.set( 0.03, 0.03, 0.03 );
-        uranusMesh.position.set( 1440, 0, 0 );
+        uranusMesh.position.set( 3345, 0, 0 );
         uranusMesh.castShadow = true;
         uranusMesh.receiveShadow = true;
         scene.add( uranusMesh );
@@ -124,7 +125,7 @@ function init(){
         console.log( gltf );
         neptuneMesh = gltf.scene;
         neptuneMesh.scale.set( 0.03, 0.03, 0.03 );
-        neptuneMesh.position.set( 1640, 0, 0 );
+        neptuneMesh.position.set( 4515, 0, 0 );
         neptuneMesh.castShadow = true;
         neptuneMesh.receiveShadow = true;
         scene.add( neptuneMesh );
@@ -136,28 +137,28 @@ function init(){
     //Planet Line
     const lineMaterial = new THREE.MeshBasicMaterial( { color: 0x0BB5FF } );
 
-    const mercuryLineGeo = new THREE.TorusGeometry( 240, 0.1, 16, 100 );
+    const mercuryLineGeo = new THREE.TorusGeometry( 300, 0.2, 16, 100 );
     const mercuryLine = new THREE.Mesh( mercuryLineGeo, lineMaterial );
 
-    const venusLineGeo = new THREE.TorusGeometry( 440, 0.1, 16, 100 );
+    const venusLineGeo = new THREE.TorusGeometry( 450, 0.2, 16, 100 );
     const venusLine = new THREE.Mesh( venusLineGeo, lineMaterial );
 
-    const earthLineGeo = new THREE.TorusGeometry( 640, 0.1, 16, 100 );
+    const earthLineGeo = new THREE.TorusGeometry( 600, 0.2, 16, 100 );
     const earthLine = new THREE.Mesh( earthLineGeo, lineMaterial );
 
-    const marsLineGeo = new THREE.TorusGeometry( 840, 0.1, 16, 100 );
+    const marsLineGeo = new THREE.TorusGeometry( 795, 0.2, 16, 100 );
     const marsLine = new THREE.Mesh( marsLineGeo, lineMaterial );
 
-    const jupiterLineGeo = new THREE.TorusGeometry( 1040, 0.1, 16, 100 );
+    const jupiterLineGeo = new THREE.TorusGeometry( 1455, 0.2, 16, 100 );
     const jupiterLine = new THREE.Mesh( jupiterLineGeo, lineMaterial );
 
-    const saturnLineGeo = new THREE.TorusGeometry( 1240, 0.1, 16, 100 );
+    const saturnLineGeo = new THREE.TorusGeometry( 2175, 0.2, 16, 100 );
     const saturnLine = new THREE.Mesh( saturnLineGeo, lineMaterial );
 
-    const uranusLineGeo = new THREE.TorusGeometry( 1440, 0.1, 16, 100 );
+    const uranusLineGeo = new THREE.TorusGeometry( 3345, 0.2, 16, 100 );
     const uranusLine = new THREE.Mesh( uranusLineGeo, lineMaterial );
 
-    const neptuneLineGeo = new THREE.TorusGeometry( 1640, 0.1, 16, 100 );
+    const neptuneLineGeo = new THREE.TorusGeometry( 4515, 0.2, 16, 100 );
     const neptuneLine = new THREE.Mesh( neptuneLineGeo, lineMaterial );
 
     scene.add( mercuryLine, venusLine, earthLine, marsLine, jupiterLine, saturnLine, uranusLine, neptuneLine );
