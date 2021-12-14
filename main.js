@@ -40,6 +40,13 @@ function init(){
 
     loader.load('./gltf/0.0_Sun.glb', sun_forge, xhr, error);
     loader.load('./gltf/1.0_Mercury.glb', mercury_forge, xhr, error);
+    loader.load('./gltf/2.0_Venus.glb', venus_forge, xhr, error);
+    loader.load('./gltf/3.0_Earth.glb', earth_forge, xhr, error);
+    loader.load('./gltf/4.0_Mars.glb', mars_forge, xhr, error);
+    loader.load('./gltf/5.0_Jupiter.glb', jupiter_forge, xhr, error);
+    loader.load('./gltf/6.0_Saturn.glb', saturn_forge, xhr, error);
+    loader.load('./gltf/7.0_Uranus.glb', uranus_forge, xhr, error);
+    loader.load('./gltf/8.0_Neptune.glb', neptune_forge, xhr, error);
 
     function sun_forge( gltf ){
         console.log( gltf );
@@ -58,6 +65,69 @@ function init(){
         mercuryMesh.castShadow = true;
         mercuryMesh.receiveShadow = true;
         scene.add( mercuryMesh );
+    }
+    function venus_forge( gltf ){
+        console.log( gltf );
+        venusMesh = gltf.scene;
+        venusMesh.scale.set( 0.007, 0.007, 0.007 );
+        venusMesh.position.set( 440, 0, 0 );
+        venusMesh.castShadow = true;
+        venusMesh.receiveShadow = true;
+        scene.add( venusMesh );
+    }
+    function earth_forge( gltf ){
+        console.log( gltf );
+        earthMesh = gltf.scene;
+        earthMesh.scale.set( 0.008, 0.008, 0.008 );
+        earthMesh.position.set( 640, 0, 0 );
+        earthMesh.castShadow = true;
+        earthMesh.receiveShadow = true;
+        scene.add( earthMesh );
+    }
+    function mars_forge( gltf ){
+        console.log( gltf );
+        marsMesh = gltf.scene;
+        marsMesh.scale.set( 0.004, 0.004, 0.004 );
+        marsMesh.position.set( 840, 0, 0 );
+        marsMesh.castShadow = true;
+        marsMesh.receiveShadow = true;
+        scene.add( marsMesh );
+    }
+    function jupiter_forge( gltf ){
+        console.log( gltf );
+        jupiterMesh = gltf.scene;
+        jupiterMesh.scale.set( 0.09, 0.09, 0.09 );
+        jupiterMesh.position.set( 1040, 0, 0 );
+        jupiterMesh.castShadow = true;
+        jupiterMesh.receiveShadow = true;
+        scene.add( jupiterMesh );
+    }
+    function saturn_forge( gltf ){
+        console.log( gltf );
+        saturnMesh = gltf.scene;
+        saturnMesh.scale.set( 0.075, 0.075, 0.075 );
+        saturnMesh.position.set( 1240, 0, 0 );
+        saturnMesh.castShadow = true;
+        saturnMesh.receiveShadow = true;
+        scene.add( saturnMesh );
+    }
+    function uranus_forge( gltf ){
+        console.log( gltf );
+        uranusMesh = gltf.scene;
+        uranusMesh.scale.set( 0.03, 0.03, 0.03 );
+        uranusMesh.position.set( 1440, 0, 0 );
+        uranusMesh.castShadow = true;
+        uranusMesh.receiveShadow = true;
+        scene.add( uranusMesh );
+    }
+    function neptune_forge( gltf ){
+        console.log( gltf );
+        neptuneMesh = gltf.scene;
+        neptuneMesh.scale.set( 0.03, 0.03, 0.03 );
+        neptuneMesh.position.set( 1640, 0, 0 );
+        neptuneMesh.castShadow = true;
+        neptuneMesh.receiveShadow = true;
+        scene.add( neptuneMesh );
     }
 
     function xhr ( xhr ) { console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' ); }
@@ -117,13 +187,13 @@ function init(){
     renderer.outputEncoding = THREE.sRGBEncoding;
     container.appendChild( renderer.domElement );
 
-    // controls = new OrbitControls(camera, renderer.domElement);
-    controls = new FlyControls( camera, renderer.domElement );
-    controls.movementSpeed = MoveSpeed;
-    controls.domElement = container;
-    controls.rollSpeed = Math.PI / 6;
-    controls.autoForward = false;
-    controls.dragToLook = false;
+    controls = new OrbitControls(camera, renderer.domElement);
+    // controls = new FlyControls( camera, renderer.domElement );
+    // controls.movementSpeed = MoveSpeed;
+    // controls.domElement = container;
+    // controls.rollSpeed = Math.PI / 6;
+    // controls.autoForward = false;
+    // controls.dragToLook = false;
 
     stats = new Stats();
     container.appendChild( stats.dom );
@@ -144,6 +214,14 @@ function animate(){
 }
 
 function render(){
+    document.addEventListener( 'keydown', onDocumentKeyDown, false );
+    function onDocumentKeyDown(event) {
+        if ( event.key == 'w' ){
+            if ( event.key == 'Shift' ){
+                MoveSpeed = 1500;
+            }
+        }
+    }
     const delta = clock.getDelta();
     controls.update( delta );
     renderer.render( scene, camera );
