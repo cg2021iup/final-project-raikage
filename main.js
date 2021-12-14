@@ -133,6 +133,43 @@ function init(){
     function xhr ( xhr ) { console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' ); }
 	function error ( error ) { console.log( 'An error happened' ); }
 
+    //Planet Line
+    const lineMaterial = new THREE.MeshBasicMaterial( { color: 0x0BB5FF } );
+
+    const mercuryLineGeo = new THREE.TorusGeometry( 240, 0.1, 16, 100 );
+    const mercuryLine = new THREE.Mesh( mercuryLineGeo, lineMaterial );
+
+    const venusLineGeo = new THREE.TorusGeometry( 440, 0.1, 16, 100 );
+    const venusLine = new THREE.Mesh( venusLineGeo, lineMaterial );
+
+    const earthLineGeo = new THREE.TorusGeometry( 640, 0.1, 16, 100 );
+    const earthLine = new THREE.Mesh( earthLineGeo, lineMaterial );
+
+    const marsLineGeo = new THREE.TorusGeometry( 840, 0.1, 16, 100 );
+    const marsLine = new THREE.Mesh( marsLineGeo, lineMaterial );
+
+    const jupiterLineGeo = new THREE.TorusGeometry( 1040, 0.1, 16, 100 );
+    const jupiterLine = new THREE.Mesh( jupiterLineGeo, lineMaterial );
+
+    const saturnLineGeo = new THREE.TorusGeometry( 1240, 0.1, 16, 100 );
+    const saturnLine = new THREE.Mesh( saturnLineGeo, lineMaterial );
+
+    const uranusLineGeo = new THREE.TorusGeometry( 1440, 0.1, 16, 100 );
+    const uranusLine = new THREE.Mesh( uranusLineGeo, lineMaterial );
+
+    const neptuneLineGeo = new THREE.TorusGeometry( 1640, 0.1, 16, 100 );
+    const neptuneLine = new THREE.Mesh( neptuneLineGeo, lineMaterial );
+
+    scene.add( mercuryLine, venusLine, earthLine, marsLine, jupiterLine, saturnLine, uranusLine, neptuneLine );
+    mercuryLine.rotation.x = Math.PI/2;
+    venusLine.rotation.x = Math.PI/2;
+    earthLine.rotation.x = Math.PI/2;
+    marsLine.rotation.x = Math.PI/2;
+    jupiterLine.rotation.x = Math.PI/2;
+    saturnLine.rotation.x = Math.PI/2;
+    uranusLine.rotation.x = Math.PI/2;
+    neptuneLine.rotation.x = Math.PI/2;
+
     //Stars
     const r = radius, starsGeometry = [ new THREE.BufferGeometry(), new THREE.BufferGeometry() ];
 
