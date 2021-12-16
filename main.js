@@ -12,8 +12,16 @@ var MoveSpeed = 1500;
 var sunMesh, mercuryMesh, venusMesh, marsMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
 
 const radius = 6371;
-
 const clock = new THREE.Clock();
+
+const mercuryPivot = new THREE.Object3D();
+const venusPivot = new THREE.Object3D();
+const earthPivot = new THREE.Object3D();
+const marsPivot = new THREE.Object3D();
+const jupiterPivot = new THREE.Object3D();
+const saturnPivot = new THREE.Object3D();
+const uranusPivot = new THREE.Object3D();
+const neptunePivot = new THREE.Object3D();
 
 init();
 animate();
@@ -22,20 +30,20 @@ function init(){
     container = document.createElement( 'div' );
     document.body.appendChild( container );
 
-    camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 1e7);
-    camera.position.set(-1000, 800, 1050);
+    camera = new THREE.PerspectiveCamera( 55, window.innerWidth/window.innerHeight, 0.1, 1e7 );
+    camera.position.set( -1000, 800, 1050 );
     camera.lookAt( 0, 0, 0 )
 
     scene = new THREE.Scene();
 
     // Light
-    pointLight = new THREE.PointLight(0xffffff);    
+    pointLight = new THREE.PointLight( 0xffffff );    
     ambientLight = new THREE.AmbientLight({
         color: 0xffffff,
         intensity: 0.1
     });
-    scene.add(ambientLight, pointLight);
-    pointLight.position.set (0, 0, 0);
+    scene.add( ambientLight, pointLight );
+    pointLight.position.set ( 0, 0, 0 );
     
     // Planets
     var loader = new GLTFLoader();
@@ -66,7 +74,8 @@ function init(){
         mercuryMesh.position.set( 300, 0, 0 );
         mercuryMesh.castShadow = true;
         mercuryMesh.receiveShadow = true;
-        scene.add( mercuryMesh );
+        mercuryPivot.add( mercuryMesh );
+        scene.add(mercuryPivot);
     }
     function venus_forge( gltf ){
         console.log( gltf );
@@ -75,7 +84,8 @@ function init(){
         venusMesh.position.set( 450, 0, 0 );
         venusMesh.castShadow = true;
         venusMesh.receiveShadow = true;
-        scene.add( venusMesh );
+        venusPivot.add( venusMesh )
+        scene.add( venusPivot );
     }
     function earth_forge( gltf ){
         console.log( gltf );
@@ -84,7 +94,8 @@ function init(){
         earthMesh.position.set( 600, 0, 0 );
         earthMesh.castShadow = true;
         earthMesh.receiveShadow = true;
-        scene.add( earthMesh );
+        earthPivot.add( earthMesh )
+        scene.add( earthPivot );
     }
     function mars_forge( gltf ){
         console.log( gltf );
@@ -93,7 +104,8 @@ function init(){
         marsMesh.position.set( 795, 0, 0 );
         marsMesh.castShadow = true;
         marsMesh.receiveShadow = true;
-        scene.add( marsMesh );
+        marsPivot.add( marsMesh )
+        scene.add( marsPivot );
     }
     function jupiter_forge( gltf ){
         console.log( gltf );
@@ -102,7 +114,8 @@ function init(){
         jupiterMesh.position.set( 1455, 0, 0 );
         jupiterMesh.castShadow = true;
         jupiterMesh.receiveShadow = true;
-        scene.add( jupiterMesh );
+        jupiterPivot.add( jupiterMesh );
+        scene.add( jupiterPivot );
     }
     function saturn_forge( gltf ){
         console.log( gltf );
@@ -111,7 +124,8 @@ function init(){
         saturnMesh.position.set( 2175, 0, 0 );
         saturnMesh.castShadow = true;
         saturnMesh.receiveShadow = true;
-        scene.add( saturnMesh );
+        saturnPivot.add( saturnMesh )
+        scene.add( saturnPivot );
     }
     function uranus_forge( gltf ){
         console.log( gltf );
@@ -120,7 +134,8 @@ function init(){
         uranusMesh.position.set( 3345, 0, 0 );
         uranusMesh.castShadow = true;
         uranusMesh.receiveShadow = true;
-        scene.add( uranusMesh );
+        uranusPivot.add( uranusMesh )
+        scene.add( uranusPivot );
     }
     function neptune_forge( gltf ){
         console.log( gltf );
@@ -129,7 +144,8 @@ function init(){
         neptuneMesh.position.set( 4515, 0, 0 );
         neptuneMesh.castShadow = true;
         neptuneMesh.receiveShadow = true;
-        scene.add( neptuneMesh );
+        neptunePivot.add( neptuneMesh )
+        scene.add( neptunePivot );
     }
 
     function xhr ( xhr ) { console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' ); }
@@ -247,11 +263,11 @@ function onWindowResize() {
 }
 
 // Planet rotation time
-function planetRotation(){
+function planetRotation() {
     sunMesh.rotation.y += 9.6e-5; // 25 * earth days
     mercuryMesh.rotation.y += 4.12e-5; // 58.6 * earth days
     venusMesh.rotation.y += 9.9e-6; // 243 * earth days
-    earthMesh.rotation.y += 24e-4;
+    earthMesh.rotation.y += 24e-4; 
     marsMesh.rotation.y += 25e-4; // earth days + 1
     jupiterMesh.rotation.y += 1e-3; // 10/earth days
     saturnMesh.rotation.y += 1.15e-3; // 10.5/earth days
@@ -259,9 +275,22 @@ function planetRotation(){
     neptuneMesh.rotation.y += 1.6e-3; // 16/earth days
 }
 
+// Planet revolution 
+function planetRevolution() {
+    mercuryPivot.rotation.y += 8.797e-5; // 87.97 days
+    venusPivot.rotation.y += 2.247e-4; // 224.70 days
+    earthPivot.rotation.y += 365e-6; // 365 days
+    marsPivot.rotation.y += 1.94e-4; // 1.88 * 365 days
+    jupiterPivot.rotation.y += 3.07e-5;// 11.86 * 365 days
+    saturnPivot.rotation.y += 1.24e-5;// 29.45 * 365 days
+    uranusPivot.rotation.y += 4.35e-6;// 84 * 365 days
+    neptunePivot.rotation.y += 2.21e-6;// 164.81 * 365 days
+}
+
 function animate(){
     requestAnimationFrame(animate);
     planetRotation();
+    planetRevolution();
     render();
     stats.update();
 }
